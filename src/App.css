@@ -1,38 +1,126 @@
-.App {
-  text-align: center;
+:root{
+  --darkgreen: #0bbe2f;
+  --green: #7fe707;
+  --gray: #818a8b;
+  --ivory: #e6e7d5;
+
+  --darkgrey: rgb(73, 73, 73);
+  --black: rgb(0, 0, 0);
+}
+.App{
+  font-family: 'Lato', sans-serif;
+  background-color: var(--black);
+  line-height: 1.6; 
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.poker-page-container{
+  background-size: auto;
+  width: 100%;
+  max-width: 500px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  padding: 35px 35px 35px;
+  min-height: 550px;
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  margin-top: -160px;
+  
+  
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.opponent-page{
+  background: #fff;
+  box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+  padding: 10px;
+  max-width: 500px;
+ 
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.opponentContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  margin: 5px;
+}
+.opponentInformation{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 50%;
+}
+.card-container-opponent2{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 15px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 13px;
+  margin-left: 50px;
+}
+.board-page{
+  display:grid;
+  grid-template-columns:auto;
+  background: #fff;
+  box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+  border-radius: 2px;
+  width: 100%;
+  max-width: 500px;
+ 
 }
 
-.App-link {
-  color: #61dafb;
+.boardContainer{
+  display: flex;
+}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  margin: 5px;
+}
+.boardInformation{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align:start;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.player-page-proba{
+  background: #fff;
+  box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+  padding: 10px;
+  max-width: 500px;
+}
+.playerContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  margin: 5px;
+}
+
+.playerInformation{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.playerCardContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 15px;
+  justify-content: center;
+  margin-top: 13px;
+  margin-left: 50px;
+}
+.player-buttons-container{
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  width: 100%;
+}
+.raiseContainer{
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 5px;
+}
+.proba{
+ margin-left: 2px;
 }
