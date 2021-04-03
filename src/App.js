@@ -210,18 +210,18 @@ class App extends Component {
     this.setState({firstRaise: firstRaise});
     this.setState({callRaise: callRaise});
   }
- // <UserPage
-   //          setName={this.setName}
-     //        name={this.state.name}
-       //      sendMessage={this.beginGame}
-         //    oppName={this.state.oppName}
-           // />
+
   render(){
     return (
     
       <div className="asd">
           <div className="App">
-          
+           <UserPage
+             setName={this.setName}
+             name={this.state.name}
+             sendMessage={this.beginGame}
+             oppName={this.state.oppName}
+            />
              <PokerPage
               name={this.state.name}
               oppName={this.state.oppName}
