@@ -66,3 +66,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+During development : url='http://localhost:8080/websocket-chat/'
+
+In production: url='https://safe-fortress-34573.herokuapp.com/websocket-chat/'

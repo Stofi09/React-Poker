@@ -12,6 +12,7 @@ class App extends Component {
   constructor(props){
       super(props);
       this.state = {
+        id:"",
         name: "",
         playerCredit:0,
         oppName: "",
@@ -40,6 +41,8 @@ class App extends Component {
         result:" "
       }
   }
+
+
 
   setName = (name) => {
     this.setState({name: name})
@@ -162,6 +165,7 @@ class App extends Component {
     this.setState({hasStarted: true});
 };
 
+
   startGame = () => {
     this.clientRef.sendMessage('/app/start', JSON.stringify({
         name: this.state.name,
@@ -253,6 +257,7 @@ class App extends Component {
           </div>
           <SockJsClient url='http://localhost:8080/websocket-chat/'
                               topics={['/topic/user']}
+                             
                               onConnect={() => {
                                   console.log("connected");
                               }}
@@ -260,7 +265,7 @@ class App extends Component {
                                   console.log("Disconnected");
                               }}
                               onMessage={(msg) => {
-                                
+                                alert(msg.oppName);
                                 if (msg.type === "otherLeft"){
                                   alert(this.state.oppName + " has left the game. You win!");
                                   this.setState({playerCredit: this.state.playerCredit + this.state.boardCredit});
@@ -289,20 +294,32 @@ class App extends Component {
                                   this.setState({turns:0})
                                   
                                 } else {
+                               
                                 if (msg.type === "Join"){
                                   if(this.state.name !== msg.name && this.state.oppName === ""){
                                     this.setState({oppName: msg.name})
                                     this.setState({hasOppOnLine: false})
                                   }
                                   if(this.state.name === msg.name){
+                                    if (this.state.id === ""){
+                                      this.setState({id: msg.id});
+                                      alert(msg.id);
+                                    }
                                     this.setState({playerCredit: msg.credit})
                                     this.setState({oppCredit: msg.oppCredit})
+                                    this.setState({oppName: msg.oppName})
+                  
                                   }
                                   if(this.state.name !== msg.name){
                                     this.setState({oppCredit: msg.credit})
+                                    this.setState({oppName: msg.name})
                                   }
                                 }
-                                
+                                else if (msg.type === "reloadPage"){
+                                  if (this.state.id === ""){
+                                    window.location.reload(false);
+                                  }
+                                }
                                 else if (msg.type === "Start"){
                                     if (this.state.name !== msg.name){
                                       this.setActions(true,true,true);
