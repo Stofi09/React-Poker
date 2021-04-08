@@ -265,7 +265,7 @@ class App extends Component {
                                   console.log("Disconnected");
                               }}
                               onMessage={(msg) => {
-                                alert(msg.oppName);
+                              
                                 if (msg.type === "otherLeft"){
                                   alert(this.state.oppName + " has left the game. You win!");
                                   this.setState({playerCredit: this.state.playerCredit + this.state.boardCredit});
@@ -303,7 +303,7 @@ class App extends Component {
                                   if(this.state.name === msg.name){
                                     if (this.state.id === ""){
                                       this.setState({id: msg.id});
-                                      alert(msg.id);
+                                
                                     }
                                     this.setState({playerCredit: msg.credit})
                                     this.setState({oppCredit: msg.oppCredit})
@@ -318,6 +318,7 @@ class App extends Component {
                                 else if (msg.type === "reloadPage"){
                                   if (this.state.id === ""){
                                     window.location.reload(false);
+                                  
                                   }
                                 }
                                 else if (msg.type === "Start"){
