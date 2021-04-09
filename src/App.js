@@ -272,7 +272,7 @@ class App extends Component {
           />
         </div>
         <SockJsClient
-          url="http://localhost:8080/websocket-chat/"
+          url="http://localhost:5000/websocket-chat/"
           topics={["/topic/user"]}
           onConnect={() => {
             console.log("connected");
@@ -359,7 +359,7 @@ class App extends Component {
                   this.setState({ opponentCard2: msg.cards[3] });
                 }
                 this.setState({ result: msg.result });
-                alert(this.state.result);
+                
                 this.setState({ hasOppOnLine: true });
                 if (this.state.oppName == "") {
                 }
