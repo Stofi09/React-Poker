@@ -80,11 +80,12 @@ class App extends Component {
     if (this.state.hasCalledOverRaise) {
       console.log("has called over raise");
       this.clientRef.sendMessage(
-        "/app/calledOverRaise",
+        this.state.playerCredit === 0 || this.state.oppCredit ===0? "/app/allIn" : "/app/calledOverRaise",
         JSON.stringify({
           name: this.state.name,
           credit: credit,
-          type: "calledOverRaise",
+          type: this.state.playerCredit === 0 || this.state.oppCredit ===0? "allIn" : "calledOverRaise"
+     //     type: "calledOverRaise",
         })
       );
       if (this.state.firstPLayer) {
@@ -115,12 +116,13 @@ class App extends Component {
       } else if (this.state.callRaise && this.state.oppRaise == credit) {
         console.log("equal call to the raise");
         this.setState({ hasTurned: true });
-        this.clientRef.sendMessage(
-          "/app/equalCall",
+        this.clientRef.sendMessage( this.state.playerCredit === 0 || this.state.oppCredit ===0 ? "/app/allIn" : "/app/equalCall",
+         
           JSON.stringify({
             name: this.state.name,
             credit: credit,
-            type: "equalCall",
+            type: this.state.playerCredit === 0 || this.state.oppCredit===0 ? "allIn" : "calledOverRaise",
+           // type: "equalCall",
             hasTurned: this.state.hasTurned,
           })
         );
@@ -272,7 +274,7 @@ class App extends Component {
           />
         </div>
         <SockJsClient
-          url="http://localhost:5000/websocket-chat/"
+          url='http://localhost:5000/websocket-chat/'
           topics={["/topic/user"]}
           onConnect={() => {
             console.log("connected");
@@ -281,6 +283,7 @@ class App extends Component {
             console.log("Disconnected");
           }}
           onMessage={(msg) => {
+           
             if (msg.type === "otherLeft") {
               alert(this.state.oppName + " has left the game. You win!");
               this.setState({
@@ -290,6 +293,7 @@ class App extends Component {
               this.setState({ oppCredit: 1000 });
               this.setState({ boardCredit: 0 });
             }
+            
             // Check for result at the end of the game
             if (msg.turn == 6) {
               if (this.state.result == "draw") {
@@ -318,7 +322,67 @@ class App extends Component {
               }
               this.setState({ hasStarted: false });
               this.setState({ turns: 0 });
+              // Checking if one of the players lost the game.
+              if (this.state.oppCredit === 0) {
+                alert("You won the game!");
+            //    window.location.reload(false);
+                this.setActions(true, true, true);
+                this.setState({hasOppOnLine:true});
+                this.setState({ hasStarted: true });
+              } 
+              if (this.state.playerCredit === 0) {
+                alert("You lost the game!");
+             //   window.location.reload(false);
+                this.setActions(true, true, true);
+                this.setState({hasOppOnLine:true});
+                this.setState({ hasStarted: true });
+              }
             } else {
+              //duplicate code
+              if (msg.type === "allIn"){
+                this.setState({ turns: msg.turn });
+                if (this.state.result == "draw") {
+                  alert("draw");
+                  this.setState({
+                    playerCredit:
+                      this.state.playerCredit + this.state.boardCredit / 2,
+                  });
+                  this.setState({
+                    oppCredit: this.state.oppCredit + this.state.boardCredit / 2,
+                  });
+                  this.setState({ boardCredit: 0 });
+                } else if (this.state.result == this.state.name) {
+                  alert("you won!");
+                  this.setState({
+                    playerCredit:
+                      this.state.playerCredit + this.state.boardCredit,
+                  });
+                  this.setState({ boardCredit: 0 });
+                } else {
+                  alert("you lost.");
+                  this.setState({
+                    oppCredit: this.state.oppCredit + this.state.boardCredit,
+                  });
+                  this.setState({ boardCredit: 0 });
+                }
+                this.setState({ hasStarted: false });
+           //     this.setState({ turns: 0 });
+                // Checking if one of the players lost the game.
+                if (this.state.oppCredit === 0) {
+                  alert("You won the game!");
+              //    window.location.reload(false);
+                  this.setActions(true, true, true);
+                  this.setState({hasOppOnLine:true});
+                  this.setState({ hasStarted: true });
+                } 
+                if (this.state.playerCredit === 0) {
+                  alert("You lost the game!");
+               //   window.location.reload(false);
+                  this.setActions(true, true, true);
+                  this.setState({hasOppOnLine:true});
+                  this.setState({ hasStarted: true });
+                }
+              } 
               if (msg.type === "Join") {
                 if (this.state.name !== msg.name && this.state.oppName !== "") {
                   this.setState({ oppName: msg.name });
@@ -341,6 +405,7 @@ class App extends Component {
                   window.location.reload(false);
                 }
               } else if (msg.type === "Start") {
+      
                 if (this.state.name !== msg.name) {
                   this.setActions(true, true, true);
                   this.setState({ hasStarted: true });
@@ -361,8 +426,7 @@ class App extends Component {
                 this.setState({ result: msg.result });
                 
                 this.setState({ hasOppOnLine: true });
-                if (this.state.oppName == "") {
-                }
+             
               } else if (msg.type === "Check") {
                 if (this.state.name !== msg.name) {
                   this.setActions(false, false, false);
