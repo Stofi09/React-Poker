@@ -283,7 +283,7 @@ class App extends Component {
             console.log("Disconnected");
           }}
           onMessage={(msg) => {
-           
+            console.log(msg.type);
             if (msg.type === "otherLeft") {
               alert(this.state.oppName + " has left the game. You win!");
               this.setState({
@@ -296,6 +296,7 @@ class App extends Component {
             
             // Check for result at the end of the game
             if (msg.turn == 6) {
+              console.log("inside 6th turn");
               if (this.state.result == "draw") {
                 alert("draw");
                 this.setState({
@@ -307,7 +308,7 @@ class App extends Component {
                 });
                 this.setState({ boardCredit: 0 });
               } else if (this.state.result == this.state.name) {
-                alert("you won!");
+                alert("you wonasd!");
                 this.setState({
                   playerCredit:
                     this.state.playerCredit + this.state.boardCredit,
@@ -340,6 +341,7 @@ class App extends Component {
             } else {
               //duplicate code
               if (msg.type === "allIn"){
+                console.log("logging all in.");
                 this.setState({ turns: msg.turn });
                 if (this.state.result == "draw") {
                   alert("draw");
@@ -351,37 +353,26 @@ class App extends Component {
                     oppCredit: this.state.oppCredit + this.state.boardCredit / 2,
                   });
                   this.setState({ boardCredit: 0 });
-                } else if (this.state.result == this.state.name) {
-                  alert("you won!");
-                  this.setState({
-                    playerCredit:
-                      this.state.playerCredit + this.state.boardCredit,
-                  });
-                  this.setState({ boardCredit: 0 });
                 } else {
-                  alert("you lost.");
-                  this.setState({
-                    oppCredit: this.state.oppCredit + this.state.boardCredit,
-                  });
+                  this.setState({ hasStarted: false });
+                  this.setState({ playerCredit: 0});
                   this.setState({ boardCredit: 0 });
-                }
-                this.setState({ hasStarted: false });
-           //     this.setState({ turns: 0 });
-                // Checking if one of the players lost the game.
-                if (this.state.oppCredit === 0) {
-                  alert("You won the game!");
-              //    window.location.reload(false);
+                  this.setState({ oppCredit: 0 });  
                   this.setActions(true, true, true);
                   this.setState({hasOppOnLine:true});
-                  this.setState({ hasStarted: true });
-                } 
-                if (this.state.playerCredit === 0) {
-                  alert("You lost the game!");
-               //   window.location.reload(false);
-                  this.setActions(true, true, true);
-                  this.setState({hasOppOnLine:true});
-                  this.setState({ hasStarted: true });
+                  this.setState({ hasStarted: true });    
+                 if (this.state.result == this.state.name) {
+                  alert("you won!");
+                  console.log("inside you won");
+                   alert("You won the game!");
+                } else {
+                  alert("you lost the game.");
+                  console.log("lost game.");
                 }
+              }
+              setTimeout(function() {
+                window.location.reload(false);
+              }, 3000);
               } 
               if (msg.type === "Join") {
                 if (this.state.name !== msg.name && this.state.oppName !== "") {
