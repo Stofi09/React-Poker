@@ -121,8 +121,8 @@ class App extends Component {
           JSON.stringify({
             name: this.state.name,
             credit: credit,
-            type: this.state.playerCredit === 0 || this.state.oppCredit===0 ? "allIn" : "calledOverRaise",
-           // type: "equalCall",
+            type: this.state.playerCredit === 0 || this.state.oppCredit===0 ? "allIn" : "equalCall",
+           
             hasTurned: this.state.hasTurned,
           })
         );
@@ -237,6 +237,7 @@ class App extends Component {
   render() {
     return (
       <div className="asd">
+        Turn: {this.state.turns}
         <div className="App">
           <UserPage
             setName={this.setName}
@@ -283,6 +284,7 @@ class App extends Component {
             console.log("Disconnected");
           }}
           onMessage={(msg) => {
+            this.setState({ turns: msg.turn });
             console.log(msg.type);
             if (msg.type === "otherLeft") {
               alert(this.state.oppName + " has left the game. You win!");
@@ -441,6 +443,8 @@ class App extends Component {
                 }
                 this.setState({ turns: msg.turn });
               } else if (msg.type === "equalCall") {
+               
+                this.setState({ turns: msg.turn });
                 if (this.state.name != msg.name) {
                   this.setActions(false, false, false);
                   this.setState({
@@ -457,6 +461,12 @@ class App extends Component {
                       " " +
                       msg.credit
                   );
+                }
+                if (this.state.firstPLayer){
+                  this.setActions(false, false, false);
+                }
+                else {
+                  this.setActions(true, true, true);
                 }
               } else if (msg.type === "overCall") {
                 if (this.state.name != msg.name) {
@@ -488,6 +498,7 @@ class App extends Component {
                   });
                   this.setRaises(true, false);
                 }
+                
               }
               if (msg.type === "Fold") {
                 if (this.state.name != msg.name) {
