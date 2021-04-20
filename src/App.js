@@ -298,7 +298,6 @@ class App extends Component {
             
             // Check for result at the end of the game
             if (msg.turn == 6) {
-              console.log("inside 6th turn");
               if (this.state.result == "draw") {
                 alert("draw");
                 this.setState({
@@ -343,8 +342,7 @@ class App extends Component {
             } else {
               //duplicate code
               if (msg.type === "allIn"){
-                console.log("logging all in.");
-                this.setState({ turns: msg.turn });
+               
                 if (this.state.result == "draw") {
                   alert("draw");
                   this.setState({
@@ -417,18 +415,13 @@ class App extends Component {
                   this.setState({ opponentCard2: msg.cards[3] });
                 }
                 this.setState({ result: msg.result });
-                
                 this.setState({ hasOppOnLine: true });
-             
               } else if (msg.type === "Check") {
                 if (this.state.name !== msg.name) {
                   this.setActions(false, false, false);
-                  this.setState({ turns: msg.turn });
+                  
                 }
               } else if (msg.type === "firstRaise") {
-                console.log("raise");
-                console.log(msg.oppRaise);
-
                 if (this.state.name != msg.name) {
                   this.setActions(true, false, false);
                   this.setState({
@@ -441,10 +434,7 @@ class App extends Component {
                   this.setState({ firstRaise: false });
                   this.setState({ callRaise: true });
                 }
-                this.setState({ turns: msg.turn });
               } else if (msg.type === "equalCall") {
-               
-                this.setState({ turns: msg.turn });
                 if (this.state.name != msg.name) {
                   this.setActions(false, false, false);
                   this.setState({
@@ -454,13 +444,6 @@ class App extends Component {
                     oppCredit: this.state.oppCredit - msg.credit,
                   });
                   this.setRaises(true, false);
-                  console.log(
-                    this.state.name +
-                      "" +
-                      this.state.boardCredit +
-                      " " +
-                      msg.credit
-                  );
                 }
                 if (this.state.firstPLayer){
                   this.setActions(false, false, false);
@@ -484,7 +467,7 @@ class App extends Component {
                 }
               } else if (msg.type === "calledOverRaise") {
                 if (this.state.name != msg.name) {
-                  console.log("overRaise has called");
+                 
                   if (this.state.firstPLayer) {
                     this.setActions(false, false, false);
                   } else {
@@ -498,7 +481,6 @@ class App extends Component {
                   });
                   this.setRaises(true, false);
                 }
-                
               }
               if (msg.type === "Fold") {
                 if (this.state.name != msg.name) {
