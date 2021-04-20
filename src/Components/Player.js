@@ -39,8 +39,8 @@ const Player = ({
     <div className="player-page-proba">
       <div className="playerContainer">
         <div className="playerInformation">
-          <h4>Name:{name}</h4>
-          <h4>Credit:{playerCredit}</h4>
+          <h4>Name: {name}</h4>
+          <h4>Credit: {playerCredit}</h4>
         </div>
         <div className="playerCard">
           <div className="playerCardContainer">

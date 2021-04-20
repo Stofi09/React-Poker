@@ -35,8 +35,8 @@ const UserPage = ({ name, setName, sendMessage, oppName }) => {
         {oppName != "" ? " " + oppName + " is waiting for you!" : ""}
         <DialogContent>
           <DialogContentText>Enter your name:</DialogContentText>
-          <form>
-            <input value={name} onChange={inputTextHandler} type="text" />
+          <form className="form">
+            <input value={name} onChange={inputTextHandler} type="text" className="form-input" />
             <button onClick={handleClose} type="submit" className="primary">
               Start Playing
             </button>

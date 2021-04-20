@@ -237,7 +237,6 @@ class App extends Component {
   render() {
     return (
       <div className="asd">
-        Turn: {this.state.turns}
         <div className="App">
           <UserPage
             setName={this.setName}
@@ -309,7 +308,7 @@ class App extends Component {
                 });
                 this.setState({ boardCredit: 0 });
               } else if (this.state.result == this.state.name) {
-                alert("you wonasd!");
+                alert("you won!");
                 this.setState({
                   playerCredit:
                     this.state.playerCredit + this.state.boardCredit,
@@ -419,7 +418,7 @@ class App extends Component {
               } else if (msg.type === "Check") {
                 if (this.state.name !== msg.name) {
                   this.setActions(false, false, false);
-                  
+                 
                 }
               } else if (msg.type === "firstRaise") {
                 if (this.state.name != msg.name) {
