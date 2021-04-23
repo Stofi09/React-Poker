@@ -20,6 +20,7 @@ class App extends Component {
       oppRaise: 0,
       reCall: 0,
       overCall: 0,
+      hasNotConnected: true,
       hasTurned: false,
       hasChecked: true,
       hasRaised: true,
@@ -243,6 +244,7 @@ class App extends Component {
             name={this.state.name}
             sendMessage={this.beginGame}
             oppName={this.state.oppName}
+            connected={this.state.hasNotConnected}
           />
           <PokerPage
             name={this.state.name}
@@ -278,9 +280,11 @@ class App extends Component {
           topics={["/topic/user"]}
           onConnect={() => {
             console.log("connected");
+            this.setState({hasNotConnected: false});
           }}
           onDisconnect={() => {
             console.log("Disconnected");
+            this.setState({hasNotConnected: true});
           }}
           onMessage={(msg) => {
             this.setState({ turns: msg.turn });

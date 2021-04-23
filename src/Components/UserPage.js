@@ -4,7 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const UserPage = ({ name, setName, sendMessage, oppName }) => {
+const UserPage = ({ name, setName, sendMessage, oppName,connected }) => {
   const [open, setOpen] = useState(true);
 
   const inputTextHandler = (e) => {
@@ -37,7 +37,7 @@ const UserPage = ({ name, setName, sendMessage, oppName }) => {
           <DialogContentText>Enter your name:</DialogContentText>
           <form className="form">
             <input value={name} onChange={inputTextHandler} type="text" className="form-input" />
-            <button onClick={handleClose} type="submit" className="primary">
+            <button onClick={handleClose} type="submit" className="primary" disabled={connected}>
               Start Playing
             </button>
           </form>
