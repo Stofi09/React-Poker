@@ -34,7 +34,10 @@ const UserPage = ({ name, setName, sendMessage, oppName,connected }) => {
         <DialogTitle id="form-dialog-title">Texas Poker</DialogTitle>
         {oppName != "" ? " " + oppName + " is waiting for you!" : ""}
         <DialogContent>
-          <DialogContentText>Enter your name:</DialogContentText>
+          <DialogContentText>{(connected)
+          ?<div style={{color: "red"}}>The client is waiting for the server.</div>
+          :<div>Enter your name</div>}
+          </DialogContentText>
           <form className="form">
             <input value={name} onChange={inputTextHandler} type="text" className="form-input" />
             <button onClick={handleClose} type="submit" className="primary" disabled={connected}>
