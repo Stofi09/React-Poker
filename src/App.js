@@ -297,6 +297,12 @@ class App extends Component {
               this.setState({ oppName: "" });
               this.setState({ oppCredit: 1000 });
               this.setState({ boardCredit: 0 });
+              this.setActions(true, true, true);
+              this.setState({hasStarted: true});
+              this.setState({hasFolded: true});
+              setTimeout(function() {
+                window.location.reload(false);
+              }, 3000);
             }
             
             // Check for result at the end of the game
