@@ -13,6 +13,7 @@ class App extends Component {
     this.state = {
       id: "",
       name: "",
+      email: "",
       playerCredit: 0,
       oppName: "",
       oppCredit: 0,
@@ -42,8 +43,11 @@ class App extends Component {
     };
   }
 
-  setName = (name) => {
+  setValues = (name, email) => {
     this.setState({ name: name });
+    this.setState({ email: email });
+    alert(email);
+    alert(this.state.email)
   };
 
   setPlayerCredit = (credit) => {
@@ -166,6 +170,7 @@ class App extends Component {
       "/app/Join",
       JSON.stringify({
         name: this.state.name,
+        email: this.state.email,
         message: this.state.typedMessage,
         credit: this.state.playerCredit,
         type: "Join",
@@ -240,8 +245,7 @@ class App extends Component {
       <div className="asd">
         <div className="App">
           <UserPage
-            setName={this.setName}
-            name={this.state.name}
+            setValues={this.setValues}       
             sendMessage={this.beginGame}
             oppName={this.state.oppName}
             connected={this.state.hasNotConnected}
@@ -276,7 +280,7 @@ class App extends Component {
           />
         </div>
         <SockJsClient
-          url='https://safe-fortress-34573.herokuapp.com/websocket-chat/'
+         url='http://localhost:5000/websocket-chat/'
           topics={["/topic/user"]}
           onConnect={() => {
             console.log("connected");
