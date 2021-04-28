@@ -43,11 +43,8 @@ class App extends Component {
     };
   }
 
-  setValues = (name, email) => {
-    this.setState({ name: name });
-    this.setState({ email: email });
-    alert(email);
-    alert(this.state.email)
+  setName = (name) => {
+    this.setState({ name: name });   
   };
 
   setPlayerCredit = (credit) => {
@@ -176,6 +173,8 @@ class App extends Component {
         type: "Join",
       })
     );
+    console.log(this.state.name);
+    console.log(this.state.email);
     this.setState({ hasChecked: true });
     //  this.setState({hasFolded: true});
     this.setState({ hasRaised: true });
@@ -245,10 +244,10 @@ class App extends Component {
       <div className="asd">
         <div className="App">
           <UserPage
-            setValues={this.setValues}       
+            setName={this.setName}
+            name={this.state.name}
             sendMessage={this.beginGame}
             oppName={this.state.oppName}
-            connected={this.state.hasNotConnected}
           />
           <PokerPage
             name={this.state.name}
