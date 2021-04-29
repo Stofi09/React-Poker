@@ -26,7 +26,7 @@ class App extends Component {
       hasTurned: false,
       hasChecked: true,
       hasRaised: true,
-      hasFolded: false,
+      hasFolded: true,
       hasOppOnLine: true,
       hasStarted: false,
       firstRaise: true,
@@ -184,6 +184,7 @@ class App extends Component {
       })
     );
     this.setActions(false,false,false);
+    this.setState({hasFolded: false})
     this.setState({ hasStarted: true });
     this.setState({ firstPLayer: true });
   };
@@ -402,6 +403,7 @@ class App extends Component {
                 }
             }
               else if (msg.type === "Start") {
+                this.setState({hasFolded: false})
                    this.setState({ turns: 0 });
                 if (this.state.name !== msg.name) {
                   this.setActions(true, true, true);
