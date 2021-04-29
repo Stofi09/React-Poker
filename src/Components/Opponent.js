@@ -30,7 +30,7 @@ const Opponent = ({
     <div className="opponent-page" disabled={hasOppOnLine}>
       <div className="opponentContainer">
         <div className="opponentInformation">
-          <h4>Name: {opponentName}</h4>
+          <h4>Opponent: {opponentName}</h4>
           <h4>Credit: {oppCredit}</h4>
         </div>
         <div className="opponentCard">
