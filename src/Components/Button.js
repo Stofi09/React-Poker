@@ -65,6 +65,7 @@ const Button = ({
           </button>
           <input
             className="proba"
+            size="10"
             type="text"
             value={newCredit}
             autoComplete="off"

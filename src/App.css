@@ -115,14 +115,15 @@
   display: grid;
   grid-template-columns: auto auto auto auto;
   width: 100%;
+  justify-content:start;
+  grid-gap: 5px;
 }
 .raiseContainer{
   display: grid;
   grid-template-columns: auto;
-  grid-gap: 5px;
 }
 .proba{
- margin-left: 2px;
+ margin-left: 10px;
 }
 
 
