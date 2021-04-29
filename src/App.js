@@ -2,6 +2,7 @@ import React, { useState, Component } from "react";
 import "./App.css";
 import UserPage from "./Components/UserPage";
 import PokerPage from "./Components/PokerPage";
+import Subscribe from "./Components/Subscribe";
 import SockJsClient from "react-stomp";
 import { findAllByDisplayValue } from "@testing-library/react";
 
@@ -40,6 +41,7 @@ class App extends Component {
       opponentCard2: 0,
       cardsValue: 0,
       result: " ",
+      subscribeState: false
     };
   }
 
@@ -173,6 +175,7 @@ class App extends Component {
         type: "Join",
       })
     );
+  
     console.log(this.state.name);
     console.log(this.state.email);
     this.setState({ hasChecked: true });
@@ -229,6 +232,17 @@ class App extends Component {
     this.setState({ boardCredit: 0 });
   };
 
+  subscribe = (email) => {
+    this.clientRef.sendMessage(
+      "/app/subscribe",
+      JSON.stringify({
+        name: this.state.name,
+        email: email
+      })
+    );
+    window.location.reload(false);
+  };
+
   setActions = (hasChecked, hasFolded, hasRaised) => {
     this.setState({ hasChecked: hasChecked });
     //  this.setState({hasFolded: hasFolded});
@@ -241,7 +255,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="asd">
+      <div className="background">
         <div className="App">
           <UserPage
             setName={this.setName}
@@ -277,6 +291,10 @@ class App extends Component {
             hasCalledOverRaise={this.state.hasCalledOverRaise}
             overCall={this.state.overCall}
           />
+          <Subscribe
+            subscribeState={this.state.subscribeState}
+            subscribe={this.subscribe}
+          />
         </div>
         <SockJsClient
          url='http://localhost:5000/websocket-chat/'
@@ -290,6 +308,7 @@ class App extends Component {
             this.setState({hasNotConnected: true});
           }}
           onMessage={(msg) => {
+           
             this.setState({ turns: msg.turn });
             console.log(msg.type);
             if (msg.type === "otherLeft") {
@@ -382,9 +401,11 @@ class App extends Component {
                   console.log("lost game.");
                 }
               }
-              setTimeout(function() {
-                window.location.reload(false);
-              }, 3000);
+              // Set subscribe to true
+              this.setState({subscribeState: true})
+            //  setTimeout(function() {
+            //    window.location.reload(false);
+             // }, 3000);
               } 
               if (msg.type === "Join") {
                 if (this.state.name !== msg.name && this.state.oppName !== "") {
@@ -407,7 +428,13 @@ class App extends Component {
                 if (this.state.id === "") {
                   window.location.reload(false);
                 }
-              } else if (msg.type === "Start") {
+              }
+              else if (msg.type === "afterSubscribe"){
+                if (this.state.name === msg.name){
+                  window.location.reload(false);
+                }
+            }
+              else if (msg.type === "Start") {
       
                 if (this.state.name !== msg.name) {
                   this.setActions(true, true, true);
@@ -428,7 +455,9 @@ class App extends Component {
                 }
                 this.setState({ result: msg.result });
                 this.setState({ hasOppOnLine: true });
-              } else if (msg.type === "Check") {
+              }
+           
+              else if (msg.type === "Check") {
                 if (this.state.name !== msg.name) {
                   this.setActions(false, false, false);
                  
