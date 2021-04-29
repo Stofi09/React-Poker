@@ -94,12 +94,10 @@ class App extends Component {
       );
       if (this.state.firstPLayer) {
         this.setState({ hasCalledOverRaise: false });
-        this.setState({ hasChecked: false });
-        this.setState({ hasRaised: false });
+        this.setActions(false,false,false);
       } else {
         this.setState({ hasCalledOverRaise: false });
-        this.setState({ hasChecked: true });
-        this.setState({ hasRaised: true });
+        this.setActions(true,true,true);
       }
       this.setState({ boardCredit: this.state.boardCredit + parseInt(credit) });
     } else {
@@ -158,9 +156,7 @@ class App extends Component {
         });
         this.setState({ hasTurned: false });
       }
-      this.setState({ hasChecked: true });
-      // this.setState({hasFolded: true});
-      this.setState({ hasRaised: true });
+      this.setActions(true,true,true);
     }
   };
 
@@ -176,11 +172,7 @@ class App extends Component {
       })
     );
   
-    console.log(this.state.name);
-    console.log(this.state.email);
-    this.setState({ hasChecked: true });
-    //  this.setState({hasFolded: true});
-    this.setState({ hasRaised: true });
+    this.setActions(true,true,true);
     this.setState({ hasStarted: true });
   };
 
@@ -191,9 +183,7 @@ class App extends Component {
         name: this.state.name,
       })
     );
-    this.setState({ hasChecked: false });
-    //  this.setState({hasFolded: false});
-    this.setState({ hasRaised: false });
+    this.setActions(false,false,false);
     this.setState({ hasStarted: true });
     this.setState({ firstPLayer: true });
   };
@@ -210,9 +200,7 @@ class App extends Component {
         hasTurned: this.state.hasTurned,
       })
     );
-    this.setState({ hasChecked: true });
-    // this.setState({hasFolded: true});
-    this.setState({ hasRaised: true });
+    this.setActions(true,true,true);
     this.setState({ hasTurned: false });
   };
 
@@ -224,9 +212,7 @@ class App extends Component {
         name: this.state.name,
       })
     );
-    this.setState({ hasChecked: true });
-    //   this.setState({hasFolded: true});
-    this.setState({ hasRaised: true });
+    this.setActions(true,true,true);
     this.setState({ hasStarted: false });
     this.setState({ oppCredit: this.state.oppCredit + this.state.boardCredit });
     this.setState({ boardCredit: 0 });
@@ -243,9 +229,10 @@ class App extends Component {
     window.location.reload(false);
   };
 
+ 
+
   setActions = (hasChecked, hasFolded, hasRaised) => {
     this.setState({ hasChecked: hasChecked });
-    //  this.setState({hasFolded: hasFolded});
     this.setState({ hasRaised: hasRaised });
   };
   setRaises = (firstRaise, callRaise) => {
@@ -372,12 +359,19 @@ class App extends Component {
                 } 
 
             else  if (this.state.result == this.state.name) {
-                alert("You won the game!");
-                this.setState({subscribeState: true})
+              alert("You won the game!");
+              setTimeout(
+                () => this.setState({ subscribeState: true }), 
+                3000
+              );
               } 
               else  {
                 alert("You lost the game!");
-                this.setState({subscribeState: true})
+                setTimeout(
+                  () => this.setState({ subscribeState: true }), 
+                  3000
+                );
+               
               }
                }
               if (msg.type === "Join") {
