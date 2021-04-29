@@ -256,6 +256,7 @@ class App extends Component {
   render() {
     return (
       <div className="background">
+        Turn: {this.state.turns}
         <div className="App">
           <UserPage
             setName={this.setName}
@@ -328,7 +329,7 @@ class App extends Component {
             }
             
             // Check for result at the end of the game
-            if (msg.turn == 6) {
+            if (msg.turn == 5 && msg.type != "allIn") {
               if (this.state.result == "draw") {
                 alert("draw");
                 this.setState({
@@ -354,26 +355,10 @@ class App extends Component {
                 this.setState({ boardCredit: 0 });
               }
               this.setState({ hasStarted: false });
-              this.setState({ turns: 0 });
-              // Checking if one of the players lost the game.
-              if (this.state.oppCredit === 0) {
-                alert("You won the game!");
-            //    window.location.reload(false);
-                this.setActions(true, true, true);
-                this.setState({hasOppOnLine:true});
-                this.setState({ hasStarted: true });
-              } 
-              if (this.state.playerCredit === 0) {
-                alert("You lost the game!");
-             //   window.location.reload(false);
-                this.setActions(true, true, true);
-                this.setState({hasOppOnLine:true});
-                this.setState({ hasStarted: true });
-              }
+         
+              
             } else {
-              //duplicate code
-              if (msg.type === "allIn"){
-               
+               if (msg.type === "allIn") {
                 if (this.state.result == "draw") {
                   alert("draw");
                   this.setState({
@@ -384,29 +369,17 @@ class App extends Component {
                     oppCredit: this.state.oppCredit + this.state.boardCredit / 2,
                   });
                   this.setState({ boardCredit: 0 });
-                } else {
-                  this.setState({ hasStarted: false });
-                  this.setState({ playerCredit: 0});
-                  this.setState({ boardCredit: 0 });
-                  this.setState({ oppCredit: 0 });  
-                  this.setActions(true, true, true);
-                  this.setState({hasOppOnLine:true});
-                  this.setState({ hasStarted: true });    
-                 if (this.state.result == this.state.name) {
-                  alert("you won!");
-                  console.log("inside you won");
-                   alert("You won the game!");
-                } else {
-                  alert("you lost the game.");
-                  console.log("lost game.");
-                }
-              }
-              // Set subscribe to true
-              this.setState({subscribeState: true})
-            //  setTimeout(function() {
-            //    window.location.reload(false);
-             // }, 3000);
+                } 
+
+            else  if (this.state.result == this.state.name) {
+                alert("You won the game!");
+                this.setState({subscribeState: true})
               } 
+              else  {
+                alert("You lost the game!");
+                this.setState({subscribeState: true})
+              }
+               }
               if (msg.type === "Join") {
                 if (this.state.name !== msg.name && this.state.oppName !== "") {
                   this.setState({ oppName: msg.name });
@@ -435,7 +408,7 @@ class App extends Component {
                 }
             }
               else if (msg.type === "Start") {
-      
+                   this.setState({ turns: 0 });
                 if (this.state.name !== msg.name) {
                   this.setActions(true, true, true);
                   this.setState({ hasStarted: true });
