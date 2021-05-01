@@ -251,6 +251,7 @@ class App extends Component {
             name={this.state.name}
             sendMessage={this.beginGame}
             oppName={this.state.oppName}
+            connected={this.state.hasNotConnected}
           />
           <PokerPage
             name={this.state.name}
@@ -343,7 +344,20 @@ class App extends Component {
                 this.setState({ boardCredit: 0 });
               }
               this.setState({ hasStarted: false });
-         
+              if (this.state.playerCredit === 0 ){
+                alert("You lost the game!");
+                setTimeout(
+                  () => this.setState({ subscribeState: true }), 
+                  3000
+                );
+              }else if (this.oppCredit === 0 ){
+                alert("You won the game!");
+                setTimeout(
+                  () => this.setState({ subscribeState: true }), 
+                  3000
+                );
+              }
+              
               
             } else {
                if (msg.type === "allIn") {
