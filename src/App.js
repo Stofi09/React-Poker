@@ -323,7 +323,7 @@ class App extends Component {
           />
         </div>
         <SockJsClient
-         url='http://localhost:5000/websocket-chat/'
+         url='https://safe-fortress-34573.herokuapp.com/websocket-chat/'
           topics={["/topic/user"]}
           onConnect={() => {
             console.log("connected");

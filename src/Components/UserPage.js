@@ -34,7 +34,8 @@ const UserPage = ({ name, setName, sendMessage, oppName,connected}) => {
         {oppName != "" ? " " + oppName + " is waiting for you!" : ""}
         <DialogContent>
           <DialogContentText>{(connected)
-          ?<div style={{color: "red"}}>The client is waiting for the server.</div>
+          ?<div style={{color: "red"}}>The client is waiting for the server. 
+          It may take up to 30 seconds.</div>
           :<div>Enter your name</div>}
           </DialogContentText>
           <form className="form">
