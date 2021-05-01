@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+During development : url='http://localhost:5000/websocket-chat/'
+
+In production: url='https://safe-fortress-34573.herokuapp.com/websocket-chat/'

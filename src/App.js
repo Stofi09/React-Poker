@@ -41,7 +41,8 @@ class App extends Component {
       opponentCard2: 0,
       cardsValue: 0,
       result: " ",
-      subscribeState: false
+      subscribeState: false,
+      status:""
     };
   }
 
@@ -241,10 +242,45 @@ class App extends Component {
     this.setState({ callRaise: callRaise });
   };
 
+  getTurnMessage = () => {
+    switch(this.state.turns) {
+      case 1:
+        if (this.state.hasChecked){
+          this.setState({status:"This is "  + this.state.oppName +"'s opening turn." })
+        } else {
+          this.setState({status: "This is your opening turn."})
+        }
+        break;
+      case 2:
+        if (this.state.hasChecked){
+          this.setState({status:"Flop: "  + this.state.oppName +" is making a decision" })
+        } else {
+          this.setState({status: "Flop, you have to make a decision"})
+        }
+        break;
+      case 3:
+        if (this.state.hasChecked){
+            this.setState({status:"Turn: "  + this.state.oppName +"is making a decision" })
+        } else {
+            this.setState({status: "Turn, you have to make a decision"})
+        }
+          break;
+      case 4:
+        if (this.state.hasChecked){
+            this.setState({status:"River: "  + this.state.oppName +" is making a decision" })
+        } else {
+            this.setState({status: "River, you have to make a decision"})
+        }
+          break;
+      default:
+        this.setState({status: ""})
+    }
+  }
+
   render() {
     return (
       <div className="background">
-        Turn: {this.state.turns}
+        <div>{this.state.status}</div>
         <div className="App">
           <UserPage
             setName={this.setName}
@@ -519,6 +555,7 @@ class App extends Component {
                 }
               }
             }
+            this.getTurnMessage();
           }}
           ref={(client) => {
             this.clientRef = client;
