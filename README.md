@@ -1,6 +1,6 @@
 To try out this game, go to this website: https://608d3c9c1facd930e9072ba1--blissful-williams-152204.netlify.app/ 
 
-In order to play with it,you have to open two clients. 
+In order to play with it, you have to open two clients. 
 
 At once only two person can play with it.
 
